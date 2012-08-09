@@ -4,6 +4,8 @@
 # 
 # Create an api_token here: https://rink.hockeyapp.net/manage/auth_tokens
 #
+# Authors: Marno Krahmer, Frederik Dietz(@fdietz)
+#
 module Sources
   module Number
     class HockeyApp < Sources::Number::Base
