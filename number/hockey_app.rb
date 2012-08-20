@@ -13,21 +13,14 @@ module Sources
       def initialize
         @api_token      = ""
         @app_identifier = ""
-        @url = URI.parse("https://rink.hockeyapp.net/api/2/apps/#{@app_identifier}/crashes?symbolicated=1&page=1")
+        @url = "https://rink.hockeyapp.net/api/2/apps/#{@app_identifier}/crashes?symbolicated=1&page=1"
       end
 
       def get(options = {})
         Rails.logger.debug("Requesting from #{@url} ...")
 
-        req = Net::HTTP::Get.new(@url.path)
-        req.add_field("X-HockeyAppToken", @api_token)
-        
-        res = Net::HTTP.new(@url.host, @url.port)
-        res.use_ssl = true
-        res = res.request(req)
-
-        crash_information = JSON.parse(res.body)
-        { :value => crash_information["total_entries"] }
+        response = HttpService.request(@url, :headers => { "X-HockeyAppToken" => @api_token })
+        { :value => response["total_entries"] }
       end
     end
   end
