@@ -52,7 +52,7 @@ For datapoints sources it makes sense to enable users to browse them easily. The
 The CI data source delivers build status results.
 
     class Demo < Sources::Ci::Base
-      def get(server_url, project, options = {})
+      def get(options = {})
         {
           :label             => "Demo name",
           :last_build_time   => Time.now.iso8601,
