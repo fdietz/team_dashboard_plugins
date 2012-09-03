@@ -105,6 +105,38 @@ The graphite data source now can easily access the configuration. In order to de
 
 Only if <code>available?</code> returns true will the data source be available in the widget editor.
 
+### Widget Configuration Params defined in Data Source
+Quite often its necessary to add a configuration option in the widget creation step which gets passed along to the data source plugin.
+
+For example the official [Jenkins source plugin](https://github.com/fdietz/team_dashboard/blob/master/app/models/sources/ci/jenkins.rb) specifies two additional fields <code>server_url</code> and <code>project</code>:
+
+    class Jenkins < Sources::Ci::Base
+
+      def fields
+        [
+          { :name => "server_url", :title => "Server Url", :mandatory => true },
+          { :name => "project", :title => "Project", :mandatory => true },
+        ]
+      end
+
+      def get(options = {})
+        fields = options.fetch(:fields)
+        result = request_build_status(fields.fetch(:server_url), fields.fetch(:project))
+        {
+          :label             => result["fullDisplayName"],
+          :last_build_time   => result["lastBuildTime"],
+          :last_build_status => status(result["result"]),
+          :current_status    => current_status(result["building"])
+        }
+      end
+
+      # ... more code here
+    end
+
+Note how the fields method returns an array of configuration params. Each param is specified by a technical <code>name</code> and the <code>title</code> and a boolean flag <code>mandatory</code> as shown above.
+
+Whenever you specify additional fields they will automatically show up in the widget editor dialog and stored in the database for you. Note, that the <code>get</code> method fetches these params again via the options hash. By convention all addition fields are separated from the default fields with the <code>fields</code> namespace.
+
 ## Contributors
 
 * Marno Krahmer
