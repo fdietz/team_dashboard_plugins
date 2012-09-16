@@ -63,12 +63,12 @@ The CI data source delivers build status results.
     end
 
 ### Number
-The number data source supports a single integer value and an optional label.
+The number data source supports a single integer value, an optional label and an optional color.
 
     class Example < Sources::Number::Base
       def get(options = {})
         # retrieve actual data here
-        { :value => 115, :label => "example label" }
+        { :value => 115, :label => "example label", :color => "#FFF" }
       end
     end
 
