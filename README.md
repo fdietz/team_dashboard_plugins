@@ -140,3 +140,4 @@ Whenever you specify additional fields they will automatically show up in the wi
 ## Contributors
 
 * Marno Krahmer
+* [DraganMileski](https://github.com/DraganMileski) (Dragan Mileski)
