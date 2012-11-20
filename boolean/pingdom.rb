@@ -39,15 +39,13 @@ module Sources
             when "up"
               check_state = true
             else
-              puts ""
-              puts '********************** WARNING **********************'
-              puts "SOMETHING IS WRONG WITH YOUR PINGDOM CHECK. PLEASE CHECK YOUR PINGDOM ACCOUNT!!!"
+              Rails.logger.debug("\n********************** WARNING **********************")
+              Rails.logger.debug("SOMETHING IS WRONG WITH YOUR PINGDOM CHECK. PLEASE CHECK YOUR PINGDOM ACCOUNT!!!\n")
               raise Sources::Booleans::NotFoundError
             end
           else
-            puts ""
-            puts '********************** ERROR **********************'
-            puts "THE CHECK_NAME YOU ENTERED IS PROBABLY INCORRECT!!!"
+            Rails.logger.debug("\n********************** ERROR **********************")
+            Rails.logger.debug("THE CHECK_NAME YOU ENTERED IS PROBABLY INCORRECT!!!\n")
             raise Sources::Booleans::NotFoundError
           end  
         end
